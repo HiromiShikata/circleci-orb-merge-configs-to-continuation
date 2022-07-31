@@ -1,7 +1,7 @@
 description: >
   Generate continuation_config.yml file
 
-executor: default
+executor: node/default
 
 parameters:
   main_branch_name:
