@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/HiromiShikata/circleci-orb-merge-configs-to-continuation/issues"
   },
-  "homepage": "https://github.com/HiromiShikata/circleci-orb-merge-configs-to-continuation#readme"
+  "homepage": "https://github.com/HiromiShikata/circleci-orb-merge-configs-to-continuation#readme",
+  "devDependencies": {
+    "semantic-release-circleci-orb": "^1.1.1"
+  }
 }
