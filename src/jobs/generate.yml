@@ -1,0 +1,39 @@
+description: >
+  Generate continuation_config.yml file
+
+executor: node/default
+
+parameters:
+  main_branch_name:
+    type: string
+    default: main
+    description: |
+      Branch name to compare.
+  service_directories:
+    type: string
+    default: ''
+    description: |
+      Directory of services to check.
+  configuration_file_name:
+    type: string
+    default: circleci.yml
+    description:
+      File name of CircleCI config in each services. One directory per line, whitespace-delimited.
+  working_directory_name:
+    type: string
+    default: tmp_merge_configs_to_continuation
+    description:
+      Working directory name.
+  continuation_config_file_name:
+    type: string
+    default: continuation_config.yml
+    description:
+      Continuation config file name.
+
+steps:
+  - generate:
+      main_branch_name: << parameters.main_branch_name >>
+      service_directories: << parameters.service_directories >>
+      configuration_file_name: << parameters.configuration_file_name >>
+      working_directory_name: << parameters.working_directory_name >>
+      continuation_config_file_name: << parameters.continuation_config_file_name >>

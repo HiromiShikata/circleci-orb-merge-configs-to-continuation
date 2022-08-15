@@ -2,25 +2,28 @@ version: 2.1
 orbs:
   merge-configs-to-continuation: hiromishikata/merge-configs-to-continuation@dev:<<pipeline.git.revision>>
   orb-tools: circleci/orb-tools@11.1
+  node: circleci/node@5
 
 filters: &filters
   tags:
     only: /.*/
 
 jobs:
-  # Create a job to test the commands of your orbs.
-  # You may want to add additional validation steps to ensure the commands are working as expected.
   command-tests:
     docker:
       - image: cimg/base:current
     steps:
       - checkout
-      # Run your orb's commands to validate them.
-      - merge-configs-to-continuation/greet
+      - node/install
+      - merge-configs-to-continuation/generate:
+          service_directories: |
+            test/service1
+            test/service2/ui
+            test/service2/api
+      - run: cat .circleci/continuation_config.yml
 workflows:
   test-deploy:
     jobs:
-      # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests:
           filters: *filters
       - orb-tools/pack:

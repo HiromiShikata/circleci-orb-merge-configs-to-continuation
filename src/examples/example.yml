@@ -1,12 +1,21 @@
 description: >
-  Sample example description.
-# Provide a use-case based example for using this orb.
-# Everything in the `usage` section will be displayed in the orb registry.
-# Comments are not retained.
+  Generate continuation_config.yml
 usage:
   version: 2.1
   orbs:
-    <orb-name>: <namespace>/<orb-name>@1.2.3
+    merge-config-to-continuation: hiromishikata/merge-config-to-continuation@1.0.0
+  jobs:
+    command-tests:
+      docker:
+        - image: cimg/base:current
+      steps:
+        - checkout
+        - node/install
+        - merge-configs-to-continuation/generate:
+            service_directories: |
+              test/service1
+              test/service2/ui
+              test/service2/api
   workflows:
     use-my-orb:
       jobs:
