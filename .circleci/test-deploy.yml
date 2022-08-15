@@ -3,6 +3,7 @@ orbs:
   merge-configs-to-continuation: hiromishikata/merge-configs-to-continuation@dev:<<pipeline.git.revision>>
   orb-tools: circleci/orb-tools@11.1
   node: circleci/node@5
+  semantic-release: proxyco/semantic-release@4.0.0
 
 filters: &filters
   tags:
@@ -21,6 +22,19 @@ jobs:
             test/service2/ui
             test/service2/api
       - run: cat .circleci/continuation_config.yml
+  publish:
+    docker:
+      - image: cimg/node:current
+    environment:
+      GH_SSH_FINGERPRINT: 'd1:fa:c5:50:cc:c9:f2:82:37:e5:eb:5c:ac:20:bc:6f'
+    steps:
+      - checkout
+      - run: sudo npm i -g @semantic-release/git @semantic-release/github semantic-release-circleci-orb semantic-release
+      - semantic-release/release
+
+
+
+
 workflows:
   test-deploy:
     jobs:
@@ -41,3 +55,11 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - publish:
+          requires:
+            - command-tests
+            - orb-tools/pack
+          context: oss
+          filters:
+            branches:
+              only: main
