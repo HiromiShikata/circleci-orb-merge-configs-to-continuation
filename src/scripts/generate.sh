@@ -25,6 +25,7 @@ done
 
 ls -la "${WORKING_DIRECTORY_NAME}"
 cd "${WORKING_DIRECTORY_NAME}" || exit
+# shellcheck disable=SC2046
 npx deepmerge-yaml $(ls -A ./) > "${CONTINUATION_CONFIG_FILE_NAME}"
 cd - || exit
 mv "${WORKING_DIRECTORY_NAME}/${CONTINUATION_CONFIG_FILE_NAME}" ".circleci/$CONTINUATION_CONFIG_FILE_NAME"
