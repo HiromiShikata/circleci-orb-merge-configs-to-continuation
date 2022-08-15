@@ -20,12 +20,38 @@ function cp_config_if_dir_has_diff() {
   cp "$dir_name/${CONFIGURATION_FILE_NAME}" "${WORKING_DIRECTORY_NAME}/${dir_name//\//-}-${CONFIGURATION_FILE_NAME}"
   echo "ADD: ${CONFIGURATION_FILE_NAME} for ${dir_name}"
 }
+function echo_empty_config() {
+  return << EOF
+version: 2.1
+
+jobs:
+  ci:
+    docker:
+      - image: cimg/node:17.2.0
+    resource_class: small
+    steps:
+      - checkout
+      - run: |
+          echo "hello ci"
+
+workflows:
+  ci:
+    jobs:
+      - ci
+EOF
+}
 
 for service in ${SERVICE_DIRECTORIES}; do
   cp_config_if_dir_has_diff "$service"
 done
 
 ls -la "${WORKING_DIRECTORY_NAME}"
+if [ "$(find "${WORKING_DIRECTORY_NAME}" -name "*.yml" | wc -l)" -eq 0 ]; then
+  echo echo_empty_config > ".circleci/${CONTINUATION_CONFIG_FILE_NAME}"
+  exit
+fi
+
+
 cd "${WORKING_DIRECTORY_NAME}" || exit
 # shellcheck disable=SC2046
 npx deepmerge-yaml $(ls -A ./) > "${CONTINUATION_CONFIG_FILE_NAME}"
