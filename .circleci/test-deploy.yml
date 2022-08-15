@@ -29,6 +29,7 @@ jobs:
       GH_SSH_FINGERPRINT: 'd1:fa:c5:50:cc:c9:f2:82:37:e5:eb:5c:ac:20:bc:6f'
     steps:
       - checkout
+      - run: circleci update
       - run: sudo npm i -g @semantic-release/git @semantic-release/github semantic-release-circleci-orb semantic-release
       - semantic-release/release
 
