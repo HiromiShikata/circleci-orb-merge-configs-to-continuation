@@ -11,7 +11,9 @@ git fetch
 
 function cp_config_if_dir_has_diff() {
   dir_name=$1
-  if [ "$(git diff "origin/${MAIN_BRANCH_NAME}"...HEAD "$dir_name" | wc -l)" -eq 0 ]; then
+  if [ "${CIRCLE_BRANCH}" = "${MAIN_BRANCH_NAME}" ]; then
+    : # no op to add all
+  elif [ "$(git diff "origin/${MAIN_BRANCH_NAME}"...HEAD "$dir_name" | wc -l)" -eq 0 ]; then
     echo "SKIP: ${dir_name}"
     return
   fi
