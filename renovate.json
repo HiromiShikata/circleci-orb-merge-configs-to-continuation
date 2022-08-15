@@ -2,5 +2,11 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
-  ]
+  ],
+  "automerge": true,
+  "rebaseWhen": "auto",
+  "ignorePresets": [
+    ":prHourlyLimit2"
+  ],
+  "branchConcurrentLimit": 0
 }
