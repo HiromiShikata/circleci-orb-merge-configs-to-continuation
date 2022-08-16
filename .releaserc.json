@@ -2,14 +2,7 @@
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    "@semantic-release/github",
-    [
-      "semantic-release-circleci-orb",
-      {
-        "orbName": "hiromishikata/merge-configs-to-continuation",
-        "orbPath": "src/@orb.yml"
-      }
-    ]
+    "@semantic-release/github"
   ],
   "branches": ["main"]
 }
