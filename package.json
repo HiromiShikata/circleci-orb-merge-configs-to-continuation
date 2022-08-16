@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/HiromiShikata/circleci-orb-merge-configs-to-continuation#readme",
   "devDependencies": {
-    "semantic-release-circleci-orb": "^1.1.1"
+    "semantic-release-circleci-orb": "1.1.1"
   }
 }
